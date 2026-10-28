@@ -7,3 +7,11 @@ node_modules/
 dist/
 frontend/node_modules/
 frontend/dist/
+
+# Local secrets and runtime data
+.env
+.env.*
+!.env.example
+*.db
+
+.agents/settings.local.json

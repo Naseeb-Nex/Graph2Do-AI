@@ -1,0 +1,3 @@
+* @graph2do/maintainers
+/apps/web/ @graph2do/frontend
+/apps/api/ @graph2do/backend

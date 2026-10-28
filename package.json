@@ -1,11 +1,17 @@
 {
   "name": "graph2do",
   "private": true,
+  "packageManager": "pnpm@9.15.0",
   "scripts": {
-    "dev": "npm --prefix frontend run dev",
-    "build": "npm --prefix frontend run build",
-    "test": "npm --prefix frontend test && pytest backend/tests",
-    "test:frontend": "npm --prefix frontend test",
-    "test:backend": "pytest backend/tests"
-  }
+    "dev:web": "npm --prefix apps/web run dev --",
+    "build": "npm --prefix apps/web run build",
+    "test": "npm --prefix apps/web test && pytest apps/api/tests",
+    "test:frontend": "npm --prefix apps/web test",
+    "test:backend": "pytest apps/api/tests",
+    "dev:api": "cd apps/api && uvicorn app.main:app --reload"
+  },
+  "workspaces": [
+    "apps/web",
+    "packages/*"
+  ]
 }

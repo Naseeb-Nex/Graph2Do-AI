@@ -1,14 +1,24 @@
 # Graph2Do
 
-## Setup
-- **Backend:** FastAPI, synchronous setup using `uvicorn`, `psycopg2-binary`, and `SQLAlchemy`.
-- **Database:** PostgreSQL initialized via Alembic.
-- **Environment:** Run `backend/venv` and activate it.
-- **Auth:** Kinde Python SDK with FastAPI for backend (routes prefixed with `/auth` and `/api/auth`), and `@kinde-oss/kinde-auth-react` for frontend.
+## Monorepo layout
+- `apps/web`: React/Vite frontend using Feature-Sliced Design.
+- `apps/api`: FastAPI backend using Clean Architecture under `app/domain`, `app/application`, `app/infrastructure`, and `app/presentation`.
+- `packages/`: shared internal libraries and contracts.
+- `infra/`: Docker, Terraform, and Kubernetes assets.
+- `docs/`: ADRs, API notes, and setup guides.
 
-## Maintaining this file
+## Commands
+- `npm run dev:web`
+- `npm run dev:api`
+- `npm test`
+- `npm run build`
 
-Keep this file for knowledge useful to almost every future agent session in this project.
-Do not repeat what the codebase already shows; point to the authoritative file or command instead.
-Prefer rewriting or pruning existing entries over appending new ones.
-When updating this file, preserve this bar for all agents and keep entries concise.
+## Backend
+- PostgreSQL is managed through Alembic.
+- Auth uses Kinde SDK.
+- API routes retain `/auth`, `/api/auth`, `/nodes`, `/graphs`, and `/ws` paths.
+
+## Architecture rules
+- Frontend imports flow downward: `app > pages > widgets > features > entities > shared`.
+- Backend dependencies point inward: presentation/infrastructure depend on application/domain; domain has no framework or persistence imports.
+- New slices expose public imports through `index.*`.

@@ -1,0 +1,5 @@
+{
+  "name": "@graph2do/api",
+  "private": true,
+  "description": "Graph2Do FastAPI application metadata"
+}
