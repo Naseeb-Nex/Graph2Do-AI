@@ -11,20 +11,11 @@ from app.presentation.api.nodes import router as nodes_router
 from app.presentation.api.ws import router as ws_router
 from app.infrastructure.database.base import Base
 from app.infrastructure.database.database import engine
+from app.infrastructure.config.config import settings
 
-# Ensure latest tables exist
-from sqlalchemy import inspect, text
-inspector = inspect(engine)
-if "nodes" in inspector.get_table_names():
-    cols = [c["name"] for c in inspector.get_columns("nodes")]
-    if "graph_id" not in cols:
-        with engine.begin() as conn:
-            conn.execute(text("DROP TABLE IF EXISTS edges"))
-            conn.execute(text("DROP TABLE IF EXISTS nodes"))
-            conn.execute(text("DROP TABLE IF EXISTS graph_members"))
-            conn.execute(text("DROP TABLE IF EXISTS graphs"))
-
-Base.metadata.create_all(bind=engine)
+# SQLite is the disposable local MVP store. Production databases require Alembic.
+if settings.database_url.startswith("sqlite"):
+    Base.metadata.create_all(bind=engine)
 
 limiter = Limiter(key_func=get_remote_address)
 
@@ -52,7 +43,7 @@ async def global_exception_handler(request: Request, exc: Exception):
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[settings.frontend_url],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

@@ -241,7 +241,7 @@ def update_node(
         )
     check_graph_access(db, node.graph_id, user_id)
 
-    update_data = update_in.dict(exclude_unset=True)
+    update_data = update_in.model_dump(exclude_unset=True)
     if "data" in update_data and update_data["data"] and node.data:
         merged_data = dict(node.data)
         merged_data.update(update_data["data"])

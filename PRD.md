@@ -1,5 +1,7 @@
 # Graph2Do - PRD & Architecture
 
+> Product intent, not implementation status. Current MVP has deterministic AI-action placeholders, local SQLite fallback, Kinde JWT auth, and graph CRUD/realtime APIs. Treat code and generated OpenAPI as runtime truth.
+
 ## 1. Vision & Goals
 * **Core Concept**: A web-based task management interface that structures tasks as a sequential knowledge graph rather than a flat list.
 * **Primary Goal**: Ensure tasks are never forgotten, break big goals down into atomic steps, visually communicate the goal behind each task, and proactively keep the user motivated.
